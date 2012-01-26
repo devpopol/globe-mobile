@@ -3,3 +3,5 @@
 *.gem
 *.swp
 test/config.yml
+irb-debug.rb
+.rbenv-*
