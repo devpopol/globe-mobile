@@ -1,8 +1,8 @@
 require 'rake'
-require 'spec/rake/spectask'
+require "rspec/core/rake_task" # RSpec 2.0
 
 desc "Run all tests"
-Spec::Rake::SpecTask.new do |t|
-  t.spec_files = FileList['test/*.rb'] - ['test/test_helper.rb']
+RSpec::Core::RakeTask.new do |t|
+  t.pattern = 'test/test_mobile_globe.rb'
   t.verbose = true
 end

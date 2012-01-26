@@ -4,57 +4,50 @@ describe "Globe Mobile API" do
   
   def valid_sms_params
     {
-      :to_number => from_config[:to_number],
+      :to_number => from_config['to_number'],
       :message  => 'hello. using globe sms api'
     }
   end
 
   def valid_mms_params
     {
-      :to_number => from_config[:to_number], 
+      :to_number => from_config['to_number'], 
       :subject => 'Testing using MMS api',
       :body => '<smil></smil>'
     }
   end
 
-  def client
-    @client ||= initialize_client 
-  end
 
-  describe "valid sms", :shared => true do
+  shared_examples "valid sms" do |client|
     it "should send" do
       client.send_sms(valid_sms_params).should be_sms_accepted
     end
   end
 
-  describe "valid mms", :shared => true do
+  shared_examples "valid mms" do |client|
     it "send mms" do
       client.send_mms(valid_mms_params).should be_mms_accepted
     end 
   end
 
   describe "using SOAP" do
-    def initialize_client
-      Mobile::Globe::SOAP::Client.configure do |config|
-        config.user_name = from_config[:user_name]
-        config.user_pin  = from_config[:user_pin]
-      end
+    client = Mobile::Globe::SOAP::Client.configure do |config|
+      config.user_name = from_config['user_name']
+      config.user_pin  = from_config['user_pin']
     end
 
-    it_should_behave_like "valid sms"
-    it_should_behave_like "valid mms"
+    it_should_behave_like "valid sms", client
+    it_should_behave_like "valid mms", client
   end
 
   describe "using REST" do
-    def initialize_client
-      Mobile::Globe::REST::Client.configure do |config|
-        config.user_name = from_config[:user_name]
-        config.user_pin  = from_config[:user_pin]
-      end
+    client = Mobile::Globe::SOAP::Client.configure do |config|
+      config.user_name = from_config['user_name']
+      config.user_pin  = from_config['user_pin']
     end
 
-    it_should_behave_like "valid sms"
-    it_should_behave_like "valid mms"
+    it_should_behave_like "valid sms", client
+    it_should_behave_like "valid mms", client
   end
 
 

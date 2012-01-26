@@ -6,5 +6,7 @@ require File.dirname(__FILE__) + '/../lib/mobile'
 # :user_pin: value
 def from_config
   config ||= YAML::load(File.open((File.join(File.dirname(__FILE__), 'config.yml'))))
+  pp config
+  config
 end
 

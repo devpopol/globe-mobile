@@ -11,6 +11,10 @@ Gem::Specification.new do |s|
   
   s.require_path = "lib"
 
-  s.add_dependency "soap4r"
+  if RUBY_VERSION =~ /1.9/
+    s.add_dependency "soap4r-ruby1.9", "~> 2.0.3"
+  else
+    s.add_dependency "soap4r"
+  end
   s.add_dependency "nokogiri"
 end
